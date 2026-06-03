@@ -1,0 +1,21 @@
+const http = require('http');
+const fs = require('fs');
+//fs module reads web.html.
+// Browser requests localhost:4800.
+// Server reads the file.
+// If error → sends 500 Internal Server Error.
+// If success → sends HTML page with 200 OK.
+// Browser displays the webpage.
+http.createServer((req,resp)=>{
+    fs.readFile('./html/web.html','utf-8',(err,data)=>{
+        if(err){
+            resp.writeHead(500,{"content-type":'text/plain'})
+            resp.write('internal server error');
+            resp.end();
+            return
+        }
+        resp.writeHead(200,{"content-type":'text/html'})
+        resp.write(data);
+        resp.end();
+    })
+}).listen(4800);
